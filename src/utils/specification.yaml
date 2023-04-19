@@ -1,0 +1,116 @@
+paths:
+  /ver/proyecto-a:
+    get:
+      tags:
+        - api ver 
+      description: Esta ruta trae el listado de todo los productos haciendo una validacion de Token, si el token no es valido devolvera un error del mismo, pero si dicho token cumple con la validacion del usuario treare el listado antes mencionado
+      parameters:
+        - $ref: '#/components/parameters/JWTtoken'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/responseListFood'
+  /crear/proyecto-a:
+    post: 
+      tags:
+        - api crear 
+      description: Esta ruta crea un item de comida en la base de datos, si el token no es valido devolvera un error del mismo, pero si dicho token cumple con la validacion del usuario creara el item antes mencionado
+      parameters:
+        - $ref: '#/components/parameters/JWTtoken'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/postFood"
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/responseFood'
+  /ver/proyecto-b:
+    get:
+      tags:
+        - api ver 
+      description: Esta ruta trae el listado de todo los productos haciendo uso de un consumo Axios a otro servidor, si el token no es valido devolvera un error del mismo, pero si dicho token cumple con la validacion del usuario treare el listado antes mencionado
+      parameters:
+        - $ref: '#/components/parameters/JWTtoken'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/responseListFood'
+  /crear/proyecto-b:
+    post: 
+      tags:
+        - api crear 
+      description: Esta ruta crea un item de comida en la base de datos haciendo uso de un consumo Axios a otro servidor, si el token no es valido devolvera un error del mismo, pero si dicho token cumple con la validacion del usuario treare el listado antes mencionado
+      parameters:
+        - $ref: '#/components/parameters/JWTtoken'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/postFood"
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/responseFood'
+components:
+  schemas:
+    postFood:
+      properties:
+        nombre:
+          type: string
+          example: "ejemplo"
+        tipo: 
+          type: string
+          example: "ejemplo"
+        precio:
+          type: number
+          example: 1500
+        descripcion:
+          type: string
+          example: "Esto es un ejemplo de descipcion"
+    responseFood:
+      properties:
+        _id: 
+          type: string
+          example: 641a029a579f12da26c35882
+        nombre: 
+          type: string
+          example: "ejemplo"
+        tipo: 
+          type: string
+          example: "ejemplo"
+        precio:
+          type: number
+          example: 1550
+        descripcion:
+          type: string
+          example: "Esto es un ejemplo de descipcion"
+        __v:
+          type: number
+          example: 0
+    responseListFood:
+      properties:
+        foods: 
+          items:
+            $ref: '#/components/schemas/responseFood'
+  parameters:
+    JWTtoken:
+      name: JWTtoken
+      in: header
+      required: true
+      schema:
+        type: string
+
